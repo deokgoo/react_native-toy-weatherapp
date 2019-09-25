@@ -1,18 +1,32 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Loading from './components/Loading'
-import { View, StyleSheet } from "react-native";
-import * as Location from "expo-location";
+import { View, StyleSheet, Alert} from "react-native";
 
-export default class extends React.Component {
-  getLocation = async () => {
-    const location = await Location.getCurrentPositionAsync()
-    console.log(location)
+import LocationService from './service/locationService';
+
+export default class extends Component {
+  state = {
+    location : null,
+    errorMessage: null,
+    isLoading: false,
   }
-  componentDidMount(){
-    this.getLocation();
+  async setLocation(){
+    let res:typeData = await LocationService.checkPermission();
+    if(res.isLocation)
+      Alert.alert("not have any location")
+    else
+      this.setState({ location: res.location })
+
+  }
+  componentWillMount(){
+    this.setLocation();
   }
   render() {
-    return <View style={styles.appView}><Loading/></View>
+    return (
+      <View style={styles.appView}>
+        <Loading/>
+      </View>
+    )
   }
 }
 
@@ -22,4 +36,8 @@ const styles = StyleSheet.create({
   }
 })
 
-
+interface typeData {
+  msg : String,
+  location : '',
+  isLocation : Boolean
+}
