@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Loading from './components/Loading'
 import { View, StyleSheet, Alert} from "react-native";
 
-import LocationService from './service/locationService';
+import checkPermission from './service/locationService';
 
 export default class extends Component {
   state = {
@@ -11,12 +11,11 @@ export default class extends Component {
     isLoading: false,
   }
   async setLocation(){
-    let res:typeData = await LocationService.checkPermission();
+    let res:typeData = await checkPermission();
     if(res.isLocation)
       Alert.alert("not have any location")
     else
       this.setState({ location: res.location })
-
   }
   componentWillMount(){
     this.setLocation();
@@ -36,7 +35,7 @@ const styles = StyleSheet.create({
   }
 })
 
-interface typeData {
+export interface typeData {
   msg : String,
   location : '',
   isLocation : Boolean

@@ -3,7 +3,7 @@ import * as Location from "expo-location";
 import Constants from 'expo-constants'
 import { Platform } from "react-native";
 
-export default {
+const LocationService = {
   data : {
     msg : String,
     location : '',
@@ -12,10 +12,10 @@ export default {
   async _getLocationAsync(){
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
-      'Permission to access location was denied'
+      this.msg = 'Permission to access location was denied'
       return false;
     }
-    let location = await Location.getCurrentPositionAsync({});
+    this.data.location = await Location.getCurrentPositionAsync({});
     return true
   },
   async checkPermission(){
@@ -24,6 +24,7 @@ export default {
     else
       this.data.isLocation = await this._getLocationAsync();
     return this.data
-
   }
 }
+
+export default LocationService.checkPermission;
