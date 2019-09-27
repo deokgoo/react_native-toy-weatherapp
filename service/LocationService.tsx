@@ -1,29 +1,35 @@
 import * as Permissions from 'expo-permissions';
 import * as Location from "expo-location";
-import Constants from 'expo-constants'
+import Constants from 'expo-constants';
 import { Platform } from "react-native";
+import { locationType, locationData } from "../types";
 
 const LocationService = {
-  data : {
-    msg : String,
-    location : '',
-    isLocation : false
-  },
   async _getLocationAsync(){
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
-      this.msg = 'Permission to access location was denied'
       return false;
     }
-    this.data.location = await Location.getCurrentPositionAsync({});
-    return true
+    return Location.getCurrentPositionAsync({});
   },
   async checkPermission(){
-    if (Platform.OS === 'android' && !Constants.isDevice)
-      this.data.msg = "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
-    else
-      this.data.isLocation = await this._getLocationAsync();
-    return this.data
+    const data:locationData = {
+      isLocation: false,
+      msg: "You Not have any permmision",
+    };
+    if (Platform.OS === 'android' && !Constants.isDevice){
+      data.msg = "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
+      return data;
+    }else{
+      var location = await this._getLocationAsync();
+      if(!location)
+        return data;
+      else{
+        let { lat, lon } = location;
+        data.location = { lat, lon };
+      }
+    }
+    return data
   }
 }
 

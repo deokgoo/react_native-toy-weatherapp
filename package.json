@@ -5,13 +5,18 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "login": "expo login",
+    "client": "expo client:ios"
   },
   "dependencies": {
     "axios": "^0.19.0",
     "expo": "^35.0.0",
+    "expo-linear-gradient": "^7.0.0",
+    "expo-localization": "^7.0.0",
     "expo-location": "~7.0.0",
     "expo-permissions": "~7.0.0",
+    "normalize-date": "^0.0.4",
     "react": "16.8.3",
     "react-dom": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
