@@ -10,7 +10,7 @@
     "client": "expo client:ios"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "expo": "^35.0.0",
     "expo-linear-gradient": "^7.0.0",
     "expo-localization": "^7.0.0",
